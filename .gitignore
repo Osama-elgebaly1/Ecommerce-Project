@@ -1,0 +1,40 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.pyc
+*.pdb
+*.egg-info/
+*.eggs/
+*.env
+*.env.*
+*.venv
+env/
+venv/
+ENV/
+VENV/
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Django specific
+*.log
+db.sqlite3
+media/
+staticfiles/        # If you’re collecting static files in production
+local_settings.py   # If you separate local/prod configs
+
+# VS Code / IDEs
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# OS stuff
+.DS_Store
+Thumbs.db
+
+# Virtual environments
+venv/
+ENV/
+env/
