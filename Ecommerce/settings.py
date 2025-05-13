@@ -36,6 +36,21 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 
+# Redirect users to this page if they try to access a view without being logged in.
+LOGIN_URL = '/login/'  
+
+
+
+# Email settings for Gmail
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'  # Gmail's SMTP server
+EMAIL_PORT = 587  # Port for TLS (587 is standard for Gmail)
+EMAIL_USE_TLS = True  # Use TLS for secure connection
+EMAIL_HOST_USER = os.getenv("From_email")  # Replace with your Gmail address
+EMAIL_HOST_PASSWORD = os.getenv("App_password")  # Use the app password (NOT your Gmail password)
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER  # Default email "from" address
+
 # Application definition
 
 INSTALLED_APPS = [

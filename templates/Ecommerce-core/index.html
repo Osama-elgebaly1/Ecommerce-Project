@@ -4,7 +4,7 @@
 
 
 {% block content %}
-
+{% include "parts/header.html" %}
 <br>
 
 <form action="{% url "search" %}" method='GET'>
@@ -57,4 +57,5 @@
             </div>
         </section>
 
+{% include "parts/footer.html " %}
 {% endblock content %}
