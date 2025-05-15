@@ -6,6 +6,9 @@ from django.contrib.auth import authenticate,login,logout
 from django.contrib.auth.decorators import login_required
 from Ecommerce_Core.models import Profile
 
+from Cart.cart import Cart
+import ast
+
 @login_required
 def edit_profile(request):
     """
@@ -27,7 +30,7 @@ def edit_profile(request):
         return render(request,'accounts/profile.html',{'form':form})
 
     
-
+@login_required
 def update_password(request):
     """
     Allows an authenticated user to update their password.
@@ -80,6 +83,9 @@ def log_in(request):
             if user:
                 login(request,user)
                 messages.success(request,'Logged in successfully...')
+                
+
+
                 return redirect('home')
             else:
                 messages.warning(request," User doesn't exist , Register new ...")
@@ -97,7 +103,7 @@ def log_in(request):
 @login_required
 def log_out(request):
     """
-    Logs out the current user and redirects to the homepage.
+    Logs out the current user and redirects to the home page.
     """
     logout(request)
     messages.success(request,'Logged out ...')

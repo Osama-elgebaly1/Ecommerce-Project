@@ -23,8 +23,9 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('',include('Ecommerce_Core.urls')),
     path('accounts/',include('Accounts.urls')),
+    path('cart/',include('Cart.urls')),
     # path('orders/',include('Orders.urls')),
     # path('payment/',include('Payment.urls')),
-    # path('cart/',include('Cart.urls')),
+
     
 ]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

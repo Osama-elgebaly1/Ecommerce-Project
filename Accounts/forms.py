@@ -7,7 +7,7 @@ from Ecommerce_Core.models import Profile
 class ProfileForm(forms.ModelForm):
 	class Meta:
 		model = Profile
-		exclude = ['user','joined_at']
+		exclude = ['user','joined_at','saved_cart']
 
 	def __init__(self, *args, **kwargs):
 		super(ProfileForm, self).__init__(*args, **kwargs)

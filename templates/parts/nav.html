@@ -25,16 +25,17 @@
                     </ul>
                 </li>
             </ul>
-            <form class="d-flex">
+            <a href="{% url "cart_summary" %}" >
                 <button class="btn btn-outline-dark" type="submit">
                     <i class="bi-cart-fill me-1"></i>
                     Cart
                     <span class="badge bg-dark text-white ms-1 rounded-pill">0</span>
                 </button>
 
-            </form>
+            </a>
             <a href="{% url "profile"  %}" class="btn btn-outline-dark ms-3" title="Profile">
                 <i class="bi bi-person-fill"></i>
+                Profile
             </a>
         </div>
     </div>

@@ -37,7 +37,7 @@ ALLOWED_HOSTS = []
 
 
 # Redirect users to this page if they try to access a view without being logged in.
-LOGIN_URL = '/login/'  
+LOGIN_URL = '/accounts/login/'  
 
 
 

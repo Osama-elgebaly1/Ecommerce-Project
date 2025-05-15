@@ -19,6 +19,7 @@ This page for browsing a singel product
                 <h1 class="display-5 fw-bolder">{{product.name}} </h1>
                 <div class="fs-5 mb-5">
                     <h5>
+                        
 {% comment %}  The logic of on sale products  {% endcomment %}
                     {% if product.on_sale %}
 
@@ -32,11 +33,14 @@ This page for browsing a singel product
                 </div>
                 <p class="lead">{{product.description}}</p>
 
-    {% comment %} Quantity box  {% endcomment %}
+    {% comment %}  Quantity box  {% endcomment %}
+    <form method='POST' action="{% url "add_cart" product.id %}">
+                {% csrf_token %}
                 <div class="d-flex">
                     <div >Quantity: </div>
                     <div class="container">
-                        <select class="form-select" id='cart-qty'>
+                        <select name='quantity' class="form-select" id='cart-qty'>
+                            <option selected >---</option>
                             <option value="1">1</option>
                             <option value="2">2</option>
                             <option value="3">3</option>
@@ -44,12 +48,14 @@ This page for browsing a singel product
                             <option value="5">5</option>
                           </select> 
                     </div>
-                   <button class="btn btn-outline-dark flex-shrink-0" type="button" value="{{product.id}} " id='add-cart'>
+                   <button type='submit' class="btn btn-outline-dark flex-shrink-0" type="button">
                         <i class="bi-cart-fill me-1"></i>
                         Add to cart
                     </button>
                     
                 </div>
+    </form>
+
             </div>
         </div>
     </div>

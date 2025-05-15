@@ -18,6 +18,7 @@ class Profile(models.Model):
     zip_code =  models.IntegerField(blank=True,null=True)
     gender = models.CharField( max_length=50,choices=Gender_Choices,blank=True,null=True)
     joined_at = models.DateTimeField(auto_now_add=True)
+    saved_cart = models.CharField(max_length=1000,null=True,blank=True)
 
     def __str__(self):
         return f"{self.user.username} {self.first_name} {self.last_name}"
