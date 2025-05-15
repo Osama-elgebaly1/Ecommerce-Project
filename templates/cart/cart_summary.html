@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+{% block content %} 
+
+<div class="container py-5">
+    <h2 class="mb-4">🛒 Your Cart</h2>
+
+    {% if products %}
+        <div class="row row-cols-1 row-cols-md-2 g-4">
+
+            {% for item in products %}
+                <div class="col">
+                    <div class="card shadow-sm">
+                        <div class="row g-0">
+                            <div class="col-md-4 d-flex align-items-center justify-content-center">
+                                <img src="{{ item.product.image.url }}" class="img-fluid cart-image" alt="{{ item.product.name }}">
+                            </div>
+                            <div class="col-md-8">
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ item.product.name }}</h5>
+                                    <p class="card-text text-muted mb-1">Quantity: {{ item.quantity }}</p>
+                                    <p class="card-text">{{ item.product.description }}</p>
+                                    <p class="card-text mb-2">
+                                        Price: 
+                                        {% if item.product.on_sale %}
+                                            <span class="text-decoration-line-through text-muted">${{ item.product.price }}</span>
+                                            <span class="text-success ms-2">${{ item.product.price_after_discount }}</span>
+                                        {% else %}
+                                            ${{ item.product.price }}
+                                        {% endif %}
+                                    </p>
+                                    <div class="d-flex gap-2">
+                                        <a href="{% url 'product' item.product.id %}" class="btn btn-info btn-sm">View Product</a>
+                                        <a href="{% url 'delete_cart' item.product.id %}" class="btn btn-outline-danger btn-sm">Remove</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+
+        </div>
+
+        <div class="mt-4 text-end">
+            <h4>Total: ${{ total }}</h4>
+            <a href="#" class="btn btn-primary">Proceed to Checkout</a>
+        </div>
+    {% else %}
+        <div class="alert alert-info">
+            Your cart is empty.
+        </div>
+    {% endif %}
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+{% endblock content %}

@@ -30,6 +30,9 @@ def edit_profile(request):
         return render(request,'accounts/profile.html',{'form':form})
 
     
+
+
+    
 @login_required
 def update_password(request):
     """
@@ -63,39 +66,49 @@ def update_password(request):
         return render(request,'accounts/update_password.html',{'form':form})
 
 
+
+
 def log_in(request):
-    
     """
-    Logs in a user if the credentials are valid.
-    Redirects authenticated users and shows messages on success or failure.
-    
+    Logs in a user if credentials are valid.
+    - If already logged in, redirect with warning.
+    - On success: login, restore cart, redirect to home.
+    - On failure: show appropriate messages.
     """
+    
     if request.user.is_authenticated:
-        messages.warning(request,'You logged in already...')
+        messages.warning(request, 'You are already logged in.')
         return redirect('home')
-        
+
     if request.method == 'POST':
-        form = LoginForm(request,data=request.POST)
+        form = LoginForm(request, data=request.POST)
+        
         if form.is_valid():
             username = form.cleaned_data['username']
             password = form.cleaned_data['password']
-            user = authenticate(request,username=username,password=password)
-            if user:
-                login(request,user)
-                messages.success(request,'Logged in successfully...')
-                
+            
+            user = authenticate(request, username=username, password=password)
+            
+            if user is not None:
+                login(request, user)
+                messages.success(request, 'Logged in successfully.')
 
+                # Restore session cart from user profile
+                cart = Cart(request)
+                cart.restore_cart_from_profile()
 
                 return redirect('home')
             else:
-                messages.warning(request," User doesn't exist , Register new ...")
+                messages.warning(request, "User doesn't exist. Please register.")
                 return redirect('register')
         else:
-            messages.error(request,'There is an error :(')
-            return render(request,'accounts/login.html',{'form':form})
+            messages.error(request, 'Invalid credentials. Please try again.')
+    
     else:
         form = LoginForm()
-        return render(request,'accounts/login.html',{'form':form})
+    
+    return render(request, 'accounts/login.html', {'form': form})
+
         
 
 

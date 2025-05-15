@@ -1,65 +1,59 @@
 {% extends "base.html" %}
 
-{% comment %}
-
-This page for browsing a singel product
-  
+{% comment %} 
+This page is for browsing a single product
 {% endcomment %}
 
 {% block content %}
-{% include "parts/header.html" %}
 <section class="py-5">
     <div class="container px-4 px-lg-5 my-5">
         <div class="row gx-4 gx-lg-5 align-items-center">
-{% comment %} The image  {% endcomment %}
-            
-            <div class="col-md-6"><img class="card-img-top mb-5 mb-md-0" src="{{product.image.url}}" alt="..." /></div>
-{% comment %} The name of the product  {% endcomment %}
+            {% comment %} The product image section {% endcomment %}
             <div class="col-md-6">
-                <h1 class="display-5 fw-bolder">{{product.name}} </h1>
+                <img class="card-img-top mb-5 mb-md-0 img-fluid" src="{{ product.image.url }}" alt="{{ product.name }}" style="object-fit: contain; max-height: 400px;">
+            </div>
+
+            {% comment %} The product details section {% endcomment %}
+            <div class="col-md-6">
+                <h1 class="display-5 fw-bolder">{{ product.name }}</h1>
+
                 <div class="fs-5 mb-5">
                     <h5>
-                        
-{% comment %}  The logic of on sale products  {% endcomment %}
-                    {% if product.on_sale %}
-
-                        <span class="text-decoration-line-through ">{{product.price}}</span>
-                        <span>${{product.price_after_discount}}</span>
-                    {% else %}
-                        <span class="text-decoration ">{{product.price}}</span>
-                    {% endif %}                                    
+                        {% comment %} The logic for displaying the product price {% endcomment %}
+                        {% if product.on_sale %}
+                            <span class="text-decoration-line-through text-muted">${{ product.price }}</span>
+                            <span class="text-danger">${{ product.price_after_discount }}</span>
+                        {% else %}
+                            <span class="text-dark">${{ product.price }}</span>
+                        {% endif %}
                     </h5>
-                  
                 </div>
-                <p class="lead">{{product.description}}</p>
 
-    {% comment %}  Quantity box  {% endcomment %}
-    <form method='POST' action="{% url "add_cart" product.id %}">
-                {% csrf_token %}
-                <div class="d-flex">
-                    <div >Quantity: </div>
-                    <div class="container">
-                        <select name='quantity' class="form-select" id='cart-qty'>
-                            <option selected >---</option>
+                <p class="lead">{{ product.description }}</p>
+
+                {% comment %} Quantity selector and Add to Cart form {% endcomment %}
+                <form method="POST" action="{% url 'add_cart' product.id %}">
+                    {% csrf_token %}
+                    <div class="d-flex align-items-center mb-3">
+                        <div class="me-3">Quantity:</div>
+                        
+                        {% comment %} Make the quantity select and button aligned {% endcomment %}
+                        <select name="quantity" class="form-select w-auto" id="cart-qty" style="max-width: 80px;">
+                            <option selected>---</option>
                             <option value="1">1</option>
                             <option value="2">2</option>
                             <option value="3">3</option>
                             <option value="4">4</option>
                             <option value="5">5</option>
-                          </select> 
-                    </div>
-                   <button type='submit' class="btn btn-outline-dark flex-shrink-0" type="button">
-                        <i class="bi-cart-fill me-1"></i>
-                        Add to cart
-                    </button>
-                    
-                </div>
-    </form>
+                        </select>
 
+                        <button type="submit" class="btn btn-dark ms-3">
+                            <i class="bi-cart-fill me-1"></i> Add to Cart
+                        </button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
 </section>
-
-{% include "parts/footer.html " %}
 {% endblock content %}
