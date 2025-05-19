@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-
+{% block title %}Cart{% endblock title %}
 {% block content %} 
 
 <div class="container py-5">
@@ -44,7 +44,7 @@
 
         <div class="mt-4 text-end">
             <h4>Total: ${{ total }}</h4>
-            <a href="#" class="btn btn-primary">Proceed to Checkout</a>
+            <a href="{% url "checkout" %}" class="btn btn-primary">Proceed to Checkout</a>
         </div>
     {% else %}
         <div class="alert alert-info">

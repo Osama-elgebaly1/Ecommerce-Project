@@ -11,7 +11,7 @@ class Profile(models.Model):
     user = models.OneToOneField(User,  on_delete=models.CASCADE)
     first_name = models.CharField( max_length=255,blank=True,null=True)
     last_name = models.CharField( max_length=255,blank=True,null=True)
-    number = models.PositiveBigIntegerField(blank=True,null=True)
+    number = models.CharField(max_length=15,blank=True,null=True)
     address =  models.CharField(max_length=500,blank=True,null=True)
     city = models.CharField( max_length=50,blank=True,null=True)
     country = models.CharField( max_length=50,blank=True,null=True)

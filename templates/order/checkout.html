@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block title %}Checkout{% endblock title %}
+{% block script %}<script src="https://cdn.tailwindcss.com"></script>{% endblock script %}
+{% block content %}
+<body class="bg-gray-100">
+  <div class="max-w-3xl mx-auto mt-10 p-6 bg-white rounded-xl shadow-md">
+    <h2 class="text-2xl font-bold mb-6">🧾 Checkout</h2>
+
+    <form method="post" class="space-y-4">
+      {% csrf_token %}
+      {{ form.non_field_errors }}
+
+      <div>
+        <label class="block font-medium">Full Name</label>
+        {{ form.full_name.errors }}
+        {{ form.full_name }}
+      </div>
+      <div>
+        <label class="block font-medium">Address</label>
+        {{ form.address.errors }}
+        {{ form.address }}
+      </div>
+      <div>
+        <label class="block font-medium">City</label>
+        {{ form.city.errors }}
+        {{ form.city }}
+      </div>
+      <div>
+        <label class="block font-medium">Country</label>
+        {{ form.country.errors }}
+        {{ form.country }}
+      </div>
+      <div>
+        <label class="block font-medium">Phone</label>
+        {{ form.phone.errors }}
+        {{ form.phone }}
+      </div>
+      <div>
+        <label class="block font-medium">Payment Method</label>
+        {{ form.payment_method.errors }}
+        {{ form.payment_method }}
+      </div>
+
+      <hr class="my-4">
+
+      <div class="flex justify-between text-lg font-bold">
+        <span>Total:</span>
+        <span>{{total}}</span>
+      </div>
+
+      <button type="submit" class="mt-4 w-full bg-green-600 text-white py-2 rounded hover:bg-green-700">Place Order</button>
+    </form>
+  </div>
+</body>
+{% endblock content %}

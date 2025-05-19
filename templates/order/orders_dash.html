@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin Dashboard - Orders</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 p-8">
+
+  <h1 class="text-3xl font-bold mb-6 text-center">📦 Admin Dashboard - Order Status</h1>
+<div class="text-center mb-8">
+  <a href="{% url 'home' %}" class="inline-block px-5 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
+    🔙 Back to Home
+  </a>
+</div>
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+
+    <!-- Not Shipped Orders -->
+    <div class="bg-white rounded-2xl shadow-lg p-6">
+      <h2 class="text-xl font-semibold text-red-600 mb-4">❌ Not Shipped Orders</h2>
+      <ul class="space-y-4">
+        <!-- Example Order -->
+        {% for order in unshipped %}
+              <li class="p-4 bg-gray-50 rounded-md border">
+              <p><strong>Order ID:</strong> {{order.id}} </p>
+              <p><strong>Customer:</strong> {{order.full_name}}</p>
+              <p><strong>Total:</strong> ${{order.total}}</p>
+              <p><strong>Date: </strong>{{order.created_at}}</p>
+
+          
+  
+          <form method="POST" action="{% url "mark_shipped" %}">
+            {% csrf_token %}
+            <input type="hidden" name="order_id" value="{{order.id}}" />
+            <button type="submit" class="mt-2 px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600">
+              ✅ Mark as Shipped
+            </button>
+          </form>
+        </li>
+        {% endfor %}
+        <!-- Repeat -->
+      </ul>
+    </div>
+
+    <!-- Shipped Orders -->
+    <div class="bg-white rounded-2xl shadow-lg p-6">
+      <h2 class="text-xl font-semibold text-green-600 mb-4">✅ Shipped Orders</h2>
+      <ul class="space-y-4">
+        {% for order in shipped %}
+              <li class="p-4 bg-gray-50 rounded-md border">
+              <p><strong>Order ID:</strong> {{order.id}} </p>
+              <p><strong>Customer:</strong> {{order.full_name}}</p>
+              <p><strong>Total:</strong> ${{order.total}}</p>
+              <p><strong>Date:</strong>{{order.created_at}}</p>
+              <form method="POST" action="{% url "mark_unshipped" %}">
+                {% csrf_token %}
+                <input type="hidden" name="order_id" value="{{order.id}}" />
+                <button type="submit" class="mt-2 px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600">
+                  ❌ Mark as Unshipped
+                </button>
+              </form>
+            </li>
+        {% endfor %}
+
+      </ul>
+    </div>
+
+  </div>
+
+</body>
+</html>

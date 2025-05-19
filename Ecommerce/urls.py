@@ -24,7 +24,7 @@ urlpatterns = [
     path('',include('Ecommerce_Core.urls')),
     path('accounts/',include('Accounts.urls')),
     path('cart/',include('Cart.urls')),
-    # path('orders/',include('Orders.urls')),
+    path('orders/',include('Orders.urls')),
     # path('payment/',include('Payment.urls')),
 
     

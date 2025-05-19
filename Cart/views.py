@@ -58,8 +58,7 @@ def add_cart(request, pk):
         product_qty = int(request.POST.get('quantity', 1))
 
     except (ValueError, TypeError):
-        messages.error(request, "Invalid quantity.")
-        return redirect('home')
+        product_qty = 1
 
     cart.add_cart(product_id, product_qty)
     messages.success(request, 'Product is added to cart successfully.')
@@ -75,7 +74,6 @@ def add_cart(request, pk):
 def delete_cart(request, pk):
     """
     Remove a product from the cart.
-
     Deletes the item with the specified primary key from the user's cart.
     """
     cart = Cart(request)
