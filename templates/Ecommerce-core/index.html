@@ -1,61 +1,98 @@
 {% extends "base.html" %}
 {% load static %}
 
-
-
 {% block content %}
 {% include "parts/header.html" %}
-<br>
 
-<form action="{% url "search" %}" method='GET'>
-  <div class="input-group input-group-lg w-50 mx-auto">
-    
-        <input name="search" type="text" class="form-control" aria-label="Sizing example input" id="search" aria-describedby="inputGroup-sizing-sm" >
-        <button type='submit' class="input-group-text" id="inputGroup-sizing-sm">Search</button>
-</div>
-</form>
+<style>
+  .product-card {
+    transition: 0.3s ease-in-out;
+  }
 
-<section class="py-5">
-        <div class="container px-4 px-lg-5 mt-5">
-                <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center" >
+  .product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  }
 
-{% for product in products  %}
-<div class="col mb-5">
-    <div class="card h-100">
-        <!-- Sale badge-->
-         {% if product.on_sale %}
-            <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">Sale</div>
-         {% endif %}
-        <!-- Product image-->
-        <img class="card-img-top" src="{{product.image.url}}" alt="..." />
-        <!-- Product details-->
-        <div class="card-body p-4">
-            <div class="text-center">
-                <!-- Product name-->
-                <h5 class="fw-bolder">{{product.name}}</h5>
-                <!-- Product price-->
-                 {% if product.on_sale %}
-                    <span class="text-muted text-decoration-line-through">${{product.price}}</span>
-                    ${{product.price_after_discount}} 
-                {% else %}
-                    <span class="text-muted text-decoration-line-through"></span>
-                    ${{product.price}} 
-                 {% endif %}
+  /* Image container flexibility */
+  .image-wrapper {
+    width: 100%;
+    height: auto;
+    max-width: 100%;
+    overflow: hidden;
+    border-bottom: 1px solid #eee;
+  }
 
-            </div>
-        </div>
-        <!-- Product actions-->
-        <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-            <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="{% url "product" product.id %}">View Product</a></div>
-        </div>
+  .image-wrapper img {
+    width: 100%;
+    height: auto; /* Let the image adjust its height based on the width */
+    object-fit: contain; /* Ensure the image is fully contained in the wrapper without distortion */
+  }
+
+  .secondary-header {
+    font-size: 2.2rem;
+    font-weight: 600;
+    text-align: center;
+    margin-top: 40px;
+    margin-bottom: 20px;
+    color: #343a40;
+  }
+</style>
+
+<!-- Search Bar -->
+<div class="container mt-4">
+  <form action="{% url 'search' %}" method="GET">
+    <div class="input-group input-group-lg mb-5 w-75 mx-auto">
+      <input name="search" type="text" class="form-control" placeholder="Search products..." aria-label="Search">
+      <button type="submit" class="btn btn-dark">Search</button>
     </div>
+  </form>
 </div>
-{% endfor %}
 
+<!-- Section Header -->
+<div class="container">
+  <h2 class="secondary-header">Explore Our Products</h2>
+</div>
 
-                </div>
-            </div>
-        </section>
+<!-- Product Grid -->
+<section class="py-4">
+  <div class="container px-4 px-lg-5">
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-xl-4 g-4">
 
-{% include "parts/footer.html " %}
+      {% for product in products %}
+      <div class="col">
+        <div class="card h-100 shadow-sm border-0 position-relative product-card">
+          
+          {% if product.on_sale %}
+            <span class="badge bg-danger position-absolute top-0 end-0 m-2">Sale</span>
+          {% endif %}
+
+          <!-- Product Image -->
+          <div class="image-wrapper">
+            <img src="{{ product.image.url }}" class="img-fluid" alt="{{ product.name }}">
+          </div>
+
+          <!-- Product Info -->
+          <div class="card-body text-center">
+            <h5 class="card-title fw-bold">{{ product.name }}</h5>
+            {% if product.on_sale %}
+              <p class="mb-0 text-muted text-decoration-line-through">${{ product.price }}</p>
+              <p class="fs-5 text-danger fw-semibold">${{ product.price_after_discount }}</p>
+            {% else %}
+              <p class="fs-5 text-dark fw-semibold">${{ product.price }}</p>
+            {% endif %}
+          </div>
+
+          <!-- Action Button -->
+          <div class="card-footer bg-transparent border-0 text-center">
+            <a href="{% url 'product' product.id %}" class="btn btn-outline-dark btn-sm w-100">View Product</a>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+
+    </div>
+  </div>
+</section>
+
 {% endblock content %}
