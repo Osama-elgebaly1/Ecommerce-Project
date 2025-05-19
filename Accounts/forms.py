@@ -15,8 +15,7 @@ class ProfileForm(forms.ModelForm):
 		self.fields['first_name'].widget.attrs['class'] = 'form-control'
 		self.fields['first_name'].widget.attrs['placeholder'] = 'First name'
 		self.fields['first_name'].label = ''
-		self.fields['first_name'].help_text = '<span class="form-text text-muted"><small>Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.</small></span>'
-
+		self.fields['first_name'].help_text = '<span class="form-text text-muted">'
 		self.fields['last_name'].widget.attrs['class'] = 'form-control'
 		self.fields['last_name'].widget.attrs['placeholder'] = 'Last name'
 		self.fields['last_name'].label = ''
@@ -24,7 +23,7 @@ class ProfileForm(forms.ModelForm):
 
 
 		self.fields['number'].widget.attrs['class'] = 'form-control'
-		self.fields['number'].widget.attrs['placeholder'] = 'Number'
+		self.fields['number'].widget.attrs['placeholder'] = 'Phone Number'
 		self.fields['number'].label = ''
 		self.fields['number'].required = False 
 
